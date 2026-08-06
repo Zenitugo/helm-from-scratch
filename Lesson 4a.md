@@ -76,3 +76,96 @@ Kubernetes behaves the same way.
 
 
 # Labels and Selectors
+Labels identify resources. Selectors find resources.
+
+```
+
+selector:
+  matchLabels:
+    app: nginx
+
+```
+
+
+```
+
+labels:
+  app: nginx
+
+  ```
+
+Labels are not just for organization. They're how Kubernetes resources communicate.
+
+
+
+A Service doesn't know Pod names. It uses labels.
+
+A Deployment doesn't know Pod names. It uses labels.
+
+A ReplicaSet doesn't know Pod names. It uses labels.
+
+Everything uses labels.
+
+Pods don't know who owns them.
+
+Deployments don't know Pod names.
+
+Services don't know Pod names.
+
+Everything is connected by labels and selectors.
+
+That is why 
+```
+labels:
+  app: front-end
+```
+instead of
+
+```
+labels:
+  app: frontend
+```
+can break an application even when all the Pods are healthy.
+
+
+
+
+## My Understanding of Labels and Selectors
+
+One of the biggest lessons I learned is that Kubernetes resources don't communicate with each other using names—they communicate using **labels** and **selectors**.
+
+A **label** is a key-value pair attached to a resource, such as a Pod:
+
+```yaml
+labels:
+  app: frontend
+```
+
+A **selector** searches for resources that have matching labels.
+
+For example:
+
+```yaml
+selector:
+  matchLabels:
+    app: frontend
+```
+
+This means:
+
+> "Find every Pod whose label is `app=frontend`."
+
+I also learned that different Kubernetes resources use selectors for different purposes:
+
+* A **Deployment** uses a selector to identify the Pods it manages.
+* A **Service** uses a selector to identify the Pods that should receive network traffic.
+
+Although both use selectors, they have different responsibilities.
+
+The Deployment is concerned with **managing Pods**, while the Service is concerned with **routing traffic**.
+
+My biggest takeaway is:
+
+> **Labels identify resources. Selectors find resources.**
+
+Everything in Kubernetes revolves around this relationship.
