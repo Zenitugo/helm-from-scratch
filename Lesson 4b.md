@@ -27,9 +27,15 @@ Pods
 Containers
 ```
 
-This completely changed how I think about Deployments.
-
 A Deployment's responsibility is to **manage Pods**, while a Pod's responsibility is to **run containers**.
+
+Instead:
+
+- A Deployment manages ReplicaSets.
+- A ReplicaSet manages Pods.
+- Pods run one or more containers.
+
+This hierarchy helped me understand why Deployments contain a Pod template.
 
 ---
 
