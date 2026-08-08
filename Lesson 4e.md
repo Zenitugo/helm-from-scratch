@@ -188,3 +188,23 @@ failureThreshold = 3
 So Kubernetes takes the appropriate action. For a liveness probe, that can mean restarting the container. For a readiness probe, the Pod remains not ready.
 
 
+5. **successThreshold**
+
+This one works in the opposite direction.
+```
+successThreshold: 2
+```
+It means: `How many consecutive successful probes are required before Kubernetes considers the probe successful again?`
+
+For example:
+```
+Failure
+   ↓
+Check → ✅
+Check → ✅
+   ↓
+Ready
+```
+The application has to successfully pass the required number of checks before Kubernetes considers it healthy/ready again.
+
+Important: for **liveness** and startup probes, successThreshold must be 1. Values greater than 1 are used with **readiness** probes.
