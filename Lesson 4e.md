@@ -84,3 +84,54 @@ No  → Probe fails
 ```
 
 The important thing I learned is that the probe is checking the **application endpoint inside the container**, not simply checking whether the container process exists.
+
+---
+
+# Probe Timing and Failure Settings
+Consider this: Your application takes 30 seconds to start. If Kubernetes starts checking the liveness probe immediately, it might get:
+```
+Application starting...
+       ↓
+GET / → ❌
+       ↓
+Kubernetes: "Unhealthy!"
+```
+
+But the application isn't actually broken. It's simply not ready yet. This is why Kubernetes gives us timing controls:
+```
+initialDelaySeconds:
+periodSeconds:
+timeoutSeconds:
+failureThreshold:
+successThreshold:
+```
+
+1. **initialDelaySeconds**
+```yaml
+initialDelaySeconds: 30
+```
+This means: `Wait 30 seconds after the container starts before performing the first probe.`
+
+So:
+```
+Container starts
+      ↓
+Wait 30 seconds
+      ↓
+First health check
+```
+This is useful for applications that take time to initialize. For example:
+```yaml
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 30
+```
+Kubernetes won't immediately start judging the application's liveness.
+
+
+
+
+
+
