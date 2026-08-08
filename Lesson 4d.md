@@ -89,7 +89,33 @@ That's what the readiness probe helps prevent.
 If the readiness check fails, Kubernetes can keep the Pod running but remove it from the Service's available endpoints, so it doesn't receive normal Service traffic.
 
 
+## Liveness & Readiness Probe in Deploment.yaml 
 
+You have:
+```
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+```
+This tells Kubernetes: `"Check the / endpoint of this container using HTTP."`
+
+And:
+```
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+```
+means: `"Also check the / endpoint to determine whether this Pod is ready to receive traffic."`
+
+So Kubernetes might make an HTTP request like:
+
+GET /
+
+If the application responds successfully, the probe passes.
+
+If it repeatedly fails, Kubernetes takes the appropriate action depending on which probe failed.
 
 
 
