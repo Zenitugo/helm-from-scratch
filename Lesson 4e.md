@@ -98,7 +98,7 @@ Kubernetes: "Unhealthy!"
 ```
 
 But the application isn't actually broken. It's simply not ready yet. This is why Kubernetes gives us timing controls:
-```
+```yaml
 initialDelaySeconds:
 periodSeconds:
 timeoutSeconds:
@@ -131,7 +131,19 @@ livenessProbe:
 Kubernetes won't immediately start judging the application's liveness.
 
 
-
+2. **periodSeconds**
+```yaml
+periodSeconds: 10
+```
+This means: `Perform the probe every 10 seconds.` So after the initial delay:
+```
+30s → Check
+40s → Check
+50s → Check
+60s → Check
+70s → Check
+```
+This refers to the frequency of the health check.
 
 
 
