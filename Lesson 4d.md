@@ -31,4 +31,51 @@ There are different types of probes, but the two we're focusing on now are:
 - Liveness Probe
 - Readiness Probe
 
+## Liveness Probe
+Liveness = Is the application alive and functioning?
+
+The liveness probe helps Kubernetes determine whether the application inside the container is still healthy enough to continue running.
+
+Suppose:
+```
+Pod
+└── Application
+       ❌ Frozen
+```
+The container may still technically be running, but the application isn't responding properly. The liveness probe can detect that.
+
+If the liveness check repeatedly fails, Kubernetes can restart the container.
+
+So in summary:
+```
+Liveness Probe
+      │
+      ▼
+"Is this application still alive?"
+      │
+   ┌──┴──┐
+   │     │
+  YES    NO
+   │     │
+   ▼     ▼
+Keep   Restart
+running container
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
