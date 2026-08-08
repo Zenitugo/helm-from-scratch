@@ -117,9 +117,82 @@ If the application responds successfully, the probe passes.
 
 If it repeatedly fails, Kubernetes takes the appropriate action depending on which probe failed.
 
+---
+
+## How Do You know an error is a Liveness or Readiness Probe Error?
 
 
+| What you observe                           | What it might indicate                 |
+| ------------------------------------------ | -------------------------------------- |
+| `Liveness probe failed`                    | Liveness problem                       |
+| `Readiness probe failed`                   | Readiness problem                      |
+| `RESTARTS` keeps increasing                | Often a liveness/container crash issue |
+| Pod is `Running` but `0/1` Ready           | Often readiness failure                |
+| Traffic stops reaching one Pod             | Could be readiness failure             |
+| Container repeatedly gets killed/restarted | Could be liveness failure              |
 
+### What Liveness Probe Errors Look Like
+```
+Liveness probe failed: HTTP probe failed with statuscode: 500
+```
+or
+```
+Liveness probe failed: Get "http://10.x.x.x:80/": context deadline exceeded
+```
+If the failure continues, you'll typically see evidence that Kubernetes restarted the container, such as:
+```
+Killing container nginx
+```
+And you can check:
+```
+kubectl get pod <pod-name>
+```
+Something like this can show up
+```
+NAME       READY   STATUS    RESTARTS
+my-app     1/1     Running   3
+```
+The `RESTARTS` count is an important clue.
+
+###  What Readiness Probe Errors Look Like
+```
+Readiness probe failed: HTTP probe failed with statuscode: 503
+```
+or
+```
+Readiness probe failed: connection refused
+```
+The important difference is what happens afterward. The container can remain running:
+```
+STATUS      Running
+RESTARTS    0
+```
+but the pod may show:
+```
+READY       0/1
+```
+instead of:
+```
+READY       1/1
+```
+
+
+## One Command to Remember
+When a Pod is behaving strangely:
+```
+kubectl describe pod <pod-name>
+```
+Look at:
+```
+Events:
+```
+That's often where Kubernetes tells you what happened. 
+
+And for a deeper look at the container's restart/crash history:
+```
+kubectl logs <pod-name> --previous
+```
+The --previous option is particularly useful when the container has already restarted, and you want the logs from the previous container instance.
 
 
 
