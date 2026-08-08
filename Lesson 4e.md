@@ -146,4 +146,24 @@ This means: `Perform the probe every 10 seconds.` So after the initial delay:
 This refers to the frequency of the health check.
 
 
+3. **timeoutSeconds**
+```yaml
+timeoutSeconds: 2
+```
+This means: `Give the application 2 seconds to respond to each probe.`
+
+Imagine Kubernetes sends:
+```
+GET /health
+```
+If the application responds within 2 seconds:
+```
+Response → ✅
+```
+If it doesn't respond within 2 seconds:
+```
+Timeout → ❌
+```
+This prevents Kubernetes from waiting indefinitely for a health check.
+
 
