@@ -19,3 +19,16 @@ Application: STUCK ❌
 From Kubernetes' perspective, simply seeing the process running isn't enough to know whether the application is functioning correctly.
 
 So Kubernetes needs a way to ask the application about its health. That's where the probe comes in
+## What is a Probe?
+A probe is essentially a health check that Kubernetes performs against a container.
+
+Think of Kubernetes asking: **"Are you okay?"**
+
+The application needs to respond in a way that tells Kubernetes whether it is healthy.
+
+There are different types of probes, but the two we're focusing on now are:
+
+- Liveness Probe
+- Readiness Probe
+
+
