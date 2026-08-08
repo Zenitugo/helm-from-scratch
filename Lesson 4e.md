@@ -167,3 +167,24 @@ Timeout → ❌
 This prevents Kubernetes from waiting indefinitely for a health check.
 
 
+4. **failureThreshold**
+
+This one is particularly important.
+```
+failureThreshold: 3
+```
+It means: `How many consecutive probe failures should occur before Kubernetes considers the probe failed?`
+
+Suppose:
+```
+Check 1 → ❌
+Check 2 → ❌
+Check 3 → ❌
+```
+Now you've reached:
+```
+failureThreshold = 3
+```
+So Kubernetes takes the appropriate action. For a liveness probe, that can mean restarting the container. For a readiness probe, the Pod remains not ready.
+
+
