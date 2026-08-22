@@ -1,4 +1,4 @@
-# Liveness and Readiness Probe
+# Lesson 4.4: Liveness and Readiness Probe
 Imagine we have:
 ```
 Pod
