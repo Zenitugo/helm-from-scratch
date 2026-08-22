@@ -142,6 +142,8 @@ So
 >
 > `targetPort` = the port on the Pod/container where the traffic should ultimately go.
 
+If you don't explicitly specify targetPort, Kubernetes normally defaults it to the same value as port.
+
 In Summary
 1. `port` belongs to Service. It means
     > The Service accepts traffic on port 80. 
