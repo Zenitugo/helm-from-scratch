@@ -39,3 +39,28 @@ For example:
         Pod A     Pod B     Pod C
 ```
 Pods can be created, destroyed, or replaced, while the Service remains the stable entry point
+
+## Service Types
+
+### Cluster IP
+This is the default kubernetes service type
+
+When you create:
+```yaml
+spec:
+  type: ClusterIP
+```
+kubernetes gives the service a stable virtual IP address
+
+ClusterIP is primarily for communication inside the Kubernetes cluster. The frontend can communicate with the backend through its Service. But an external user on the Internet doesn't normally connect directly to the ClusterIP.
+
+For external access, we can use things such as:
+```text
+Internet
+    ↓
+LoadBalancer / Ingress
+    ↓
+Service
+    ↓
+Pods
+```
