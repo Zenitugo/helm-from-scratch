@@ -41,6 +41,10 @@ For example:
 Pods can be created, destroyed, or replaced, while the Service remains the stable entry point
 
 ## Service Types
+The Kubernetes service tyoes are:
+- Cluster IP
+- NodePort
+- LoadBalancer
 
 ### Cluster IP
 This is the default kubernetes service type
@@ -65,7 +69,74 @@ Service
 Pods
 ```
 
-### Service Port
+### NodePort
+if you want traffic from outside the cluster to reach your Service, one option to achieve this is to use a node port
+```yaml
+type: NodePort
+```
+A NodePort exposes a Service on a specific port on each Kubernetes Node. It is called node port because the Service is exposed through a port on the Node.
+
+For instance a node can be seen as:
+```text
+EKS Cluster
+│
+├── Node 1 → EC2
+├── Node 2 → EC2
+└── Node 3 → EC2
+```
+kubernetes opens port on those node/ec2
+
+```text
+Node 1
+10.0.1.10:30080
+
+Node 2
+10.0.2.10:30080
+
+Node 3
+10.0.3.10:30080
+```
+
+By default kubernetes node ports are allocated from `30000–32767`
+
+Suppose we have:
+```yaml
+ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30080
+```
+We now have different ports
+```text
+NodePort      → 30080
+Service port  → 80
+Target port   → 8080
+```
+Traffic can flow like this:
+```text
+External Client
+      │
+      │ :30080
+      ▼
+   Kubernetes Node
+      │
+      ▼
+   Service :80
+      │
+      ▼
+   Pod :8080
+      │
+      ▼
+ Application
+```
+NodePort isn't usually the most convenient way to expose production applications directly to the Internet. This is where Loadbalancer becomes useful.
+
+## Service Port
+The service port are:
+- port
+- container port
+- target port
+
 nginx chart has
 ```yaml
 service:
@@ -153,3 +224,5 @@ In Summary
 
 3. `container port` belongs to Deployment. It means
     >  Belongs to the Pod's container definition.
+
+
