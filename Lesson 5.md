@@ -131,6 +131,26 @@ External Client
 ```
 NodePort isn't usually the most convenient way to expose production applications directly to the Internet. This is where Loadbalancer becomes useful.
 
+
+### LoadBalancer
+A service can use:
+```yaml
+type: LoadBalancer
+```
+On a cloud platform such as AWS, Kubernetes can integrate with cloud load-balancing infrastructure.
+```text
+Internet
+   │
+   ▼
+AWS Load Balancer
+   │
+   ▼
+Kubernetes Service
+   │
+   ▼
+Pods
+```
+
 ## Service Port
 The service port are:
 - port
