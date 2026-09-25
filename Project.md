@@ -40,4 +40,14 @@ The goal is to develop the ability to design, write, and troubleshoot
 Helm charts independently.
 
 
+# Creating the Helm Chart
+
+I used the `helm create` command to create a helm chart for the Orderly Platform. The chart servers as a foundation for defining  how the app will be deployed in Kubernetes.
+
+command:
+```
+helm create orderly-platform
+```
+
+
 
