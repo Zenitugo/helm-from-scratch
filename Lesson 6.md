@@ -16,3 +16,19 @@ eksctl create cluster \
   --nodes-min 1 \
   --nodes-max 1
 ```
+
+```bash
+kubectl get nodes
+```
+
+```bash
+kubectl get pods -A
+```
+
+```bash
+kubectl get deployment
+```
+
+```bash
+eksctl delete cluster --name my-nginx-cluster --region eu-central-1
+```
