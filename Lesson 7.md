@@ -1,6 +1,4 @@
-# Extra Things I Learnt while Creating Orderly
-
-## Understanding Version Numbers in Helm
+# Understanding Version Numbers in Helm
 
 When working with Helm charts and applications, version numbers help track changes and identify different releases.
 
@@ -47,7 +45,7 @@ description: A Helm chart for Orderly Platform
 type: application
 version: 0.1.0
 appVersion: "1.0.0"
-
+```
 
 
 
