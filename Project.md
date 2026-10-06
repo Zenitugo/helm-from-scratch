@@ -49,5 +49,9 @@ command:
 helm create orderly-platform
 ```
 
+```
+helm install api-gateway ./api-gateway -n orderly
+``
+
 
 
